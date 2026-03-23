@@ -10,6 +10,8 @@ public class Main {
 
         Auto a2 = new Auto("Honda", "Civic", "Azul", 2019);
 
+        a2.mostrarVelocidad();
+
     }
     
 }
