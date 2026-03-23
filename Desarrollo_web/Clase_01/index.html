@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sponge-Shooter: Gun Edition</title>
+    <style>
+        body { background: #001a33; color: #fff; margin: 0; overflow: hidden; font-family: 'Comic Sans MS', cursive; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        canvas { border: 5px solid #ffcc00; box-shadow: 0 0 50px rgba(255, 204, 0, 0.3); background: #000; cursor: crosshair; }
+        #hud { position: absolute; bottom: 20px; width: 780px; display: flex; justify-content: space-between; padding: 15px; background: rgba(0,0,50,0.8); border: 2px solid #ffcc00; border-radius: 15px; z-index: 10; }
+        .bar { width: 200px; height: 15px; background: #333; border: 2px solid #fff; }
+        #hp-fill { width: 100%; height: 100%; background: #00ff00; transition: 0.1s; }
+    </style>
+</head>
+<body>
+
+    <div id="hud">
+        <div>BURBUJAS DE VIDA <div class="bar"><div id="hp-fill"></div></div></div>
+        <div style="color: #ffcc00; font-size: 20px;">ESPACIO PARA DISPARAR</div>
+        <div>PUNTOS: <span id="score">0</span></div>
+    </div>
+
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const hpFill = document.getElementById('hp-fill');
+        const scoreEl = document.getElementById('score');
+
+        const TILE = 64;
+        const MAPA = [
+            [1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,0,0,0,0,1,1,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,1],
+            [1,0,1,0,0,1,0,0,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1]
+        ];
+
+        let score = 0;
+        let health = 100;
+        let recoil = 0; // Para la animación de la pistola
+        let flash = 0;  // Para el destello del disparo
+
+        const player = { x: 100, y: 100, angle: 0, speed: 3.5, turnSpeed: 0.07 };
+        const bullets = [];
+        const enemies = [
+            { x: 300, y: 300, alive: true, bobFrame: 0 },
+            { x: 550, y: 200, alive: true, bobFrame: 1 },
+            { x: 200, y: 350, alive: true, bobFrame: 2 },
+            { x: 600, y: 100, alive: true, bobFrame: 3 }
+        ];
+
+        const keys = {};
+        window.onkeydown = (e) => keys[e.code] = true;
+        window.onkeyup = (e) => keys[e.code] = false;
+
+        function update() {
+            if (health <= 0) return;
+
+            if (keys['ArrowLeft']) player.angle -= player.turnSpeed;
+            if (keys['ArrowRight']) player.angle += player.turnSpeed;
+
+            let nx = player.x, ny = player.y;
+            if (keys['KeyW']) { nx += Math.cos(player.angle) * player.speed; ny += Math.sin(player.angle) * player.speed; }
+            if (keys['KeyS']) { nx -= Math.cos(player.angle) * player.speed; ny -= Math.sin(player.angle) * player.speed; }
+
+            if (MAPA[Math.floor(ny/TILE)][Math.floor(nx/TILE)] === 0) { player.x = nx; player.y = ny; }
+
+            // Lógica de disparo y retroceso
+            if (recoil > 0) recoil -= 2;
+            if (flash > 0) flash -= 1;
+
+            if (keys['Space']) {
+                if (bullets.length < 5 && recoil <= 0) {
+                    bullets.push({ x: player.x, y: player.y, angle: player.angle, d: 0 });
+                    recoil = 15;
+                    flash = 3;
+                    keys['Space'] = false;
+                }
+            }
+
+            bullets.forEach((b, i) => {
+                b.d += 18;
+                let bx = b.x + Math.cos(b.angle) * b.d;
+                let by = b.y + Math.sin(b.angle) * b.d;
+                enemies.forEach(en => {
+                    if (en.alive && Math.hypot(en.x - bx, en.y - by) < 40) {
+                        en.alive = false; score += 500; scoreEl.innerText = score; b.d = 999;
+                    }
+                });
+                if (MAPA[Math.floor(by/TILE)][Math.floor(bx/TILE)] === 1 || b.d > 800) bullets.splice(i, 1);
+            });
+
+            enemies.forEach(en => {
+                if (!en.alive) return;
+                let dist = Math.hypot(player.x - en.x, player.y - en.y);
+                if (dist < 450) {
+                    let a = Math.atan2(player.y - en.y, player.x - en.x);
+                    en.x += Math.cos(a) * 1.5; en.y += Math.sin(a) * 1.5;
+                    en.bobFrame += 0.1;
+                }
+                if (dist < 40) { health -= 0.6; hpFill.style.width = health + "%"; }
+            });
+        }
+
+        function drawGun() {
+            ctx.save();
+            ctx.translate(canvas.width - 200, canvas.height - 100 + recoil);
+            
+            // Sombra del arma
+            ctx.fillStyle = "rgba(0,0,0,0.3)";
+            ctx.fillRect(15, 5, 120, 50);
+
+            // Cuerpo de la pistola (Estilo futurista/burbujas)
+            ctx.fillStyle = "#444"; 
+            ctx.fillRect(0, 0, 100, 40); // Cañón
+            ctx.fillStyle = "#222";
+            ctx.fillRect(-20, 20, 40, 80); // Empuñadura
+            
+            // Detalles amarillos
+            ctx.fillStyle = "#ffcc00";
+            ctx.fillRect(10, 10, 60, 5);
+            
+            // Muzzle Flash
+            if (flash > 0) {
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(110, 15, 25, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = "yellow";
+                ctx.beginPath();
+                ctx.arc(110, 15, 15, 0, Math.PI*2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function drawBob(x, y, size, frame) {
+            let bobY = y + Math.sin(frame) * 10;
+            ctx.fillStyle = "#ffff00"; ctx.fillRect(x - size/2, bobY - size/2, size, size * 0.7);
+            ctx.fillStyle = "#663300"; ctx.fillRect(x - size/2, bobY + size * 0.2, size, size * 0.3);
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(x - size/2, bobY + size * 0.1, size, size * 0.1);
+            ctx.fillStyle = "white";
+            ctx.beginPath(); ctx.arc(x - size/4, bobY - size/6, size/6, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(x + size/4, bobY - size/6, size/6, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "black";
+            ctx.beginPath(); ctx.arc(x - size/4, bobY - size/6, size/15, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(x + size/4, bobY - size/6, size/15, 0, Math.PI*2); ctx.fill();
+        }
+
+        function draw() {
+            // Renderizado de Fondo
+            ctx.fillStyle = "#004488"; ctx.fillRect(0,0,canvas.width, canvas.height/2);
+            ctx.fillStyle = "#d2b48c"; ctx.fillRect(0,canvas.height/2,canvas.width, canvas.height/2);
+
+            const FOV = Math.PI / 3;
+            const numRays = 120;
+            const zBuffer = [];
+
+            for (let i = 0; i < numRays; i++) {
+                let rayAngle = (player.angle - FOV/2) + (i * (FOV/numRays));
+                let d = 0;
+                while (d < 800) {
+                    d += 4;
+                    if (MAPA[Math.floor((player.y + Math.sin(rayAngle)*d)/TILE)][Math.floor((player.x + Math.cos(rayAngle)*d)/TILE)] === 1) break;
+                }
+                let rd = d * Math.cos(rayAngle - player.angle);
+                zBuffer[i] = rd;
+                let h = (TILE * 400) / rd;
+                ctx.fillStyle = `rgb(0, ${80 - rd/12}, ${150 - rd/6})`;
+                ctx.fillRect(i * (canvas.width/numRays), (canvas.height/2)-h/2, (canvas.width/numRays)+1, h);
+            }
+
+            // Enemigos
+            enemies.forEach(en => {
+                if (!en.alive) return;
+                let ang = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+                while(ang < -Math.PI) ang += Math.PI*2; while(ang > Math.PI) ang -= Math.PI*2;
+                if (Math.abs(ang) < FOV) {
+                    let d = Math.hypot(en.x - player.x, en.y - player.y);
+                    let sx = (ang/FOV + 0.5) * canvas.width;
+                    let size = (TILE * 500) / d;
+                    if (d < zBuffer[Math.floor(sx/(canvas.width/numRays))]) drawBob(sx, canvas.height/2, size, en.bobFrame);
+                }
+            });
+
+            // Balas en vuelo (pequeños proyectiles amarillos)
+            bullets.forEach(b => {
+                ctx.fillStyle = "yellow";
+                ctx.beginPath();
+                ctx.arc(canvas.width/2, canvas.height/2 + (b.d/10), 4, 0, Math.PI*2);
+                ctx.fill();
+            });
+
+            // Personaje (Avatar central)
+            ctx.fillStyle = "#ff99cc"; 
+            ctx.fillRect(canvas.width/2 - 20, canvas.height - 120, 40, 60);
+
+            // DIBUJAR PISTOLA
+            drawGun();
+
+            if (health <= 0) {
+                ctx.fillStyle = "rgba(0,0,0,0.8)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = "red"; ctx.font = "50px Arial"; ctx.fillText("GAME OVER", 270, 250);
+            }
+        }
+
+        function loop() { update(); draw(); requestAnimationFrame(loop); }
+        loop();
+    </script>
+</body>
+</html>
