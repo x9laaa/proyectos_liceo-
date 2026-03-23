@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_06;
 public class Computador {
     private String marca;
     private String modelo;

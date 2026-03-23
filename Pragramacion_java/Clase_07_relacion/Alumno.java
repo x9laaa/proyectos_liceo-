@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_07_relacion;
 public class Alumno {
     private String nombre;
     private Curso curso;

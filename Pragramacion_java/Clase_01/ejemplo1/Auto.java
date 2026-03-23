@@ -1,3 +1,5 @@
+package Pragramacion_java.Clase_01.ejemplo1;
+
 public class Auto {
     private String marca;
     private String modelo;
@@ -36,11 +38,6 @@ public class Auto {
 
     public void mostrarVelocidad() {
         System.out.println("Velocidad actual: " + velocidad + " km/h");
-    }   
+    }
 
-
-
-
-
-    
 }

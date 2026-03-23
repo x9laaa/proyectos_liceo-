@@ -1,3 +1,5 @@
+package Pragramacion_java.Clase_01.ejemplo2;
+
 public class Main {
     public static void main(String[] args) {
         Pokemon p1 = new Pokemon("Pikachu", 100);

@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_08_Arrayslist.ejemplo_objetos;
 import java.util.ArrayList;
 
 public class Curso {

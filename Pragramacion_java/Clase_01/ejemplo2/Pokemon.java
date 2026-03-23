@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_01.ejemplo2;
 public class Pokemon {
     private String nombre;
     private int vida;

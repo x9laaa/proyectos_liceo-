@@ -4,5 +4,6 @@
     ],
     "java.project.referencedLibraries": [
         "Pragramacion_java\\ejemplo_pokemon_db\\lib\\mysql-connector-j-9.5.0.jar"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

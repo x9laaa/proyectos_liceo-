@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_03;
 public class Alumno {
     private String nombreAlumno;
     private int alturaAlumno;

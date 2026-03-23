@@ -1,3 +1,4 @@
+package Pragramacion_java.Clase_08_Arrayslist.ejemplo_objetos;
 public class Alumno {
 
     private String nombre;
