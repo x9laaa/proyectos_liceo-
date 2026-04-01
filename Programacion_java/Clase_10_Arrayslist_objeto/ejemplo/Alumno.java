@@ -1,4 +1,4 @@
-package Programacion_java.Clase10_Arrayslist_objeto.ejemplo;
+package Programacion_java.Clase_10_Arrayslist_objeto.ejemplo;
 
 public class Alumno {
     
