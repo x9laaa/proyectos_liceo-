@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.caja {
+  width: 250px;
+  height: 200px;
+  background: blue;
+  color: white;
+
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Opciones de descarga</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-4">
+    <h2 class="text-xl font-bold text-center">Opciones de descarga</h2>
+
+    <div class="text-center">
+      {% if video.thumbnail %}
+        <img src="{{ video.thumbnail }}" alt="Miniatura" class="w-full rounded mb-2">
+      {% endif %}
+      <h3 class="text-lg font-semibold">{{ video.title }}</h3>
+      <p class="text-sm text-gray-600">Canal: {{ video.uploader }}</p>
+      <p class="text-sm text-gray-600">Duración: {{ video.duration }} segundos</p>
+    </div>
+
+    <form method="POST" class="space-y-4" id="formulario-descarga">
+      <div>
+        <label class="block text-sm font-semibold mb-1">Formato:</label>
+        <select name="formato" class="w-full px-4 py-2 border rounded">
+          <option value="mp4">MP4</option>
+          <option value="mkv">MKV</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Nombre del archivo:</label>
+        <input type="text" name="nombre" value="{{ video.title }}" required class="w-full px-4 py-2 border rounded">
+      </div>
+      <button id="boton-descargar" type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+        Procesar video
+      </button>
+      
+      <div id="mensaje-cargando" class="text-center text-sm text-gray-600 mt-2 hidden">
+        ⏳ Procesando video, por favor espera...
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('formulario-descarga');
+    const mensaje = document.getElementById('mensaje-cargando');
+    const boton = document.getElementById('boton-descargar');
+
+    form.addEventListener('submit', () => {
+      boton.disabled = true;
+      boton.classList.add('opacity-50', 'cursor-not-allowed');
+      mensaje.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

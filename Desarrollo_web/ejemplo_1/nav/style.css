@@ -1,0 +1,28 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #333;
+  padding: 15px;
+}
+
+.logo {
+  color: white;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+/* efecto bonito */
+.menu a:hover {
+  color: yellow;
+}

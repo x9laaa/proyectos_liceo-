@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de Cajas</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* CAJA / CARD */
+        .caja {
+            background: white;
+            width: 250px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .caja:hover {
+            transform: scale(1.05);
+        }
+
+        /* TITULO */
+        .caja h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        /* TEXTO */
+        .caja p {
+            color: #666;
+        }
+
+        /* BOTÓN */
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+
+        <div class="caja">
+            <h2>Curso HTML</h2>
+            <p>Aprende a crear páginas web desde cero.</p>
+            <a href="#" class="btn">Ver más</a>
+        </div>
+
+        <div class="caja">
+            <h2>Curso CSS</h2>
+            <p>Diseña páginas modernas y atractivas.</p>
+            <a href="#" class="btn">Ver más</a>
+        </div>
+
+        <div class="caja">
+            <h2>Curso JavaScript</h2>
+            <p>Agrega interactividad a tus sitios web.</p>
+            <a href="#" class="btn">Ver más</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

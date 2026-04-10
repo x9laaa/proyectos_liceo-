@@ -7,11 +7,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Nave nave1 = new Nave("Enterprise", "NCC-1701", 5);
-        nave1.agregarTripulante(new Tripulante(1, "James", "Capitán"));
-        nave1.agregarTripulante(new Tripulante(2, "Spock", "Oficial Científico"));
-        nave1.agregarTripulante(new Tripulante(3, "Leonard", "Oficial Médico"));
-        nave1.agregarTripulante(new Tripulante(4, "Montgomery", "Jefe de Ingeniería"));
-        nave1.agregarTripulante(new Tripulante(5, "Nyota", "Oficial de Comunicaciones"));
+        nave1.agregarTripulante(new Tripulante(1, "joaqui", "Capitán"));
+        nave1.agregarTripulante(new Tripulante(2, "tomas", "Oficial Científico"));
+        nave1.agregarTripulante(new Tripulante(3, "brayan", "Oficial Médico"));
+        nave1.agregarTripulante(new Tripulante(4, "erick", "Jefe de Ingeniería"));
+        nave1.agregarTripulante(new Tripulante(5, "pablo", "Oficial de Comunicaciones"));
 
         nave1.mostrarInpostores();
         nave1.asignarImpostor();

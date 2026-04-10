@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseño Profesional</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fa;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #111;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #007BFF, #00c6ff);
+    color: white;
+}
+
+.hero h1 {
+    margin-bottom: 10px;
+}
+
+.hero p {
+    opacity: 0.9;
+}
+
+/* CONTENEDOR */
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 40px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+/* IMAGEN */
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* CONTENIDO */
+.card-content {
+    padding: 20px;
+}
+
+.badge {
+    display: inline-block;
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 10px 0;
+}
+
+.card p {
+    color: #666;
+}
+
+/* BOTÓN */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+/* FOOTER */
+.footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div><strong>MiSitio</strong></div>
+    <div>
+        <a href="#">Inicio</a>
+        <a href="#">Cursos</a>
+        <a href="#">Contacto</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Aprende Desarrollo Web</h1>
+    <p>Crea sitios modernos y profesionales</p>
+</div>
+
+<!-- CARDS -->
+<div class="contenedor">
+
+    <div class="card">
+        <img src="https://picsum.photos/300/200?1">
+        <div class="card-content">
+            <span class="badge">Nuevo</span>
+            <h3>HTML</h3>
+            <p>Aprende la estructura de la web.</p>
+            <a href="#" class="btn">Ver curso</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://picsum.photos/300/200?2">
+        <div class="card-content">
+            <span class="badge">Popular</span>
+            <h3>CSS</h3>
+            <p>Diseña páginas atractivas.</p>
+            <a href="#" class="btn">Ver curso</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://picsum.photos/300/200?3">
+        <div class="card-content">
+            <span class="badge">Pro</span>
+            <h3>JavaScript</h3>
+            <p>Agrega interactividad.</p>
+            <a href="#" class="btn">Ver curso</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>© 2026 MiSitio - Todos los derechos reservados</p>
+</div>
+
+</body>
+</html>
