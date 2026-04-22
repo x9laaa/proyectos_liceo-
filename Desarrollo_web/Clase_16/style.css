@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+
+}
+
+nav {
+  background-color: #333;
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none; /* Quita los puntos de la lista */
+  display: flex;    /* Alinea los elementos en fila */
+  justify-content: center; /* Centra el menú */
+  gap: 20px;       /* Espacio exacto entre enlaces */
+}
+
+nav a {
+  text-decoration: none; /* Quita el subrayado */
+  color: white;
+  
+}
+
+nav a:hover {
+  color: #ffca28; /* Cambia de color al pasar el mouse */
+}

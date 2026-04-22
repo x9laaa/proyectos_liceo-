@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Auto a1 = new Auto(null, null, null, 0)
+        Auto a1 = new Auto(null, null, null, 0);
         
     }
 
